@@ -9,7 +9,7 @@
     <license type="expression">MIT</license>
     <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
     <readme>README.md</readme>
-    <projectUrl>https://github.com/youruser/gitver</projectUrl>
+    <projectUrl>https://github.com/HugoUno/gitver</projectUrl>
     <description>基於 Git 的 .NET 版本自動化 MSBuild 套件。
       
       特色：
@@ -31,7 +31,7 @@
 • 多重後備策略</releaseNotes>
     <copyright>Copyright (c) 2025 Hugo</copyright>
     <tags>git version msbuild automatic versioning taiwan lightweight</tags>
-    <repository type="git" url="https://github.com/youruser/gitver" commit="db3ebe00ba94102e67a79c30560f63727ddde907" />
+    <repository type="git" url="https://github.com/HugoUno/gitver" commit="cb2ab12c5f7d1860330c4b60732cda7d9418d30e" />
   </metadata>
   <files>
     <file src="/Users/Hugo/project/poc/gitver/README.md" target="/README.md" />

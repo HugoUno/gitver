@@ -14,7 +14,9 @@
       "Bash(dotnet pack:*)",
       "Bash(dotnet new:*)",
       "Bash(dotnet nuget add source:*)",
-      "Bash(dotnet nuget locals:*)"
+      "Bash(dotnet nuget locals:*)",
+      "Bash(git remote remove:*)",
+      "Bash(git remote add:*)"
     ],
     "deny": [],
     "ask": []

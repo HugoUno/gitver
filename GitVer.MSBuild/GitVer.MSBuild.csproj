@@ -28,8 +28,8 @@
       3. 使用版本：GitVersionInfo.Version
     </Description>
     <PackageTags>git;version;msbuild;automatic;versioning;taiwan;lightweight</PackageTags>
-    <PackageProjectUrl>https://github.com/hugo-dc/gitver</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/hugo-dc/gitver</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/HugoUno/gitver</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/HugoUno/gitver</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
