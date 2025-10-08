@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>GitVer</RootNamespace>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <VersionFallback>dev</VersionFallback>
+    <VersionOverride Condition="'$(Version)' != ''">$(Version)</VersionOverride>
+    <VersionOverride Condition="'$(VersionOverride)' == '' and '$(DefineConstants)' != ''">$([System.Text.RegularExpressions.Regex]::Match('$(DefineConstants)', 'VERSION=(?:&quot;(?&lt;value&gt;[^"]+)&quot;|(?&lt;value&gt;[^;]+))').Groups['value'].Value)</VersionOverride>
+    <VersionEffective Condition="'$(VersionOverride)' != ''">$(VersionOverride)</VersionEffective>
+    <VersionEffective Condition="'$(VersionEffective)' == ''">$(VersionFallback)</VersionEffective>
+  </PropertyGroup>
+
+  <Target Name="GenerateVersionSource" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <GeneratedVersionPath>$(IntermediateOutputPath)GeneratedVersion.g.cs</GeneratedVersionPath>
+      <VersionLiteral>$([MSBuild]::Escape('$(VersionEffective)'))</VersionLiteral>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <VersionSourceLine Include="namespace GitVer%3b" />
+      <VersionSourceLine Include="internal static partial class Program" />
+      <VersionSourceLine Include="{" />
+      <VersionSourceLine Include="    static partial void ApplyVersionOverride(ref string version)" />
+      <VersionSourceLine Include="    {" />
+      <VersionSourceLine Include="        version = &quot;$(VersionLiteral)&quot;%3b" />
+      <VersionSourceLine Include="    }" />
+      <VersionSourceLine Include="}" />
+      <Compile Include="$(GeneratedVersionPath)" />
+    </ItemGroup>
+
+    <WriteLinesToFile
+      File="$(GeneratedVersionPath)"
+      Lines="@(VersionSourceLine)"
+      Overwrite="true"
+      Encoding="UTF-8" />
+  </Target>
+</Project>
