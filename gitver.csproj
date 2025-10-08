@@ -5,12 +5,60 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <VersionFallback>dev</VersionFallback>
-    <VersionOverride Condition="'$(Version)' != ''">$(Version)</VersionOverride>
-    <VersionOverride Condition="'$(VersionOverride)' == '' and '$(DefineConstants)' != ''">$([System.Text.RegularExpressions.Regex]::Match('$(DefineConstants)', 'VERSION=(?:&quot;(?&lt;value&gt;[^"]+)&quot;|(?&lt;value&gt;[^;]+))').Groups['value'].Value)</VersionOverride>
-    <VersionEffective Condition="'$(VersionOverride)' != ''">$(VersionOverride)</VersionEffective>
-    <VersionEffective Condition="'$(VersionEffective)' == ''">$(VersionFallback)</VersionEffective>
+    <VersionFallback Condition="'$(VersionFallback)' == ''">dev</VersionFallback>
   </PropertyGroup>
+
+  <Target Name="ResolveVersion" BeforeTargets="GenerateVersionSource">
+    <PropertyGroup>
+      <DefineConstantsOriginal>$(DefineConstants)</DefineConstantsOriginal>
+      <VersionEffective Condition="'$(VersionEffective)' == '' and '$(Version)' != '' and '$(Version)' != '1.0.0'">$(Version)</VersionEffective>
+      <VersionFromConstants Condition="'$(VersionFromConstants)' == '' and '$(DefineConstantsOriginal)' != ''">$([System.Text.RegularExpressions.Regex]::Match('$(DefineConstantsOriginal)', 'VERSION=(?:&quot;(?&lt;value&gt;[^"]+)&quot;|(?&lt;value&gt;[^;]+))').Groups['value'].Value)</VersionFromConstants>
+      <VersionEffective Condition="'$(VersionEffective)' == '' and '$(VersionFromConstants)' != ''">$(VersionFromConstants)</VersionEffective>
+    </PropertyGroup>
+
+    <Exec
+      Command="git -C &quot;$(MSBuildProjectDirectory)&quot; describe --tags --always"
+      ConsoleToMSBuild="true"
+      IgnoreExitCode="true"
+      StandardOutputImportance="Low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitDescribeOutputRaw" />
+    </Exec>
+
+    <Exec
+      Command="git -C &quot;$(MSBuildProjectDirectory)&quot; describe --tags --abbrev=0"
+      ConsoleToMSBuild="true"
+      IgnoreExitCode="true"
+      StandardOutputImportance="Low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitTagRaw" />
+    </Exec>
+
+    <Exec
+      Command="git -C &quot;$(MSBuildProjectDirectory)&quot; rev-parse --short HEAD"
+      ConsoleToMSBuild="true"
+      IgnoreExitCode="true"
+      StandardOutputImportance="Low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitCommitRaw" />
+    </Exec>
+
+    <PropertyGroup>
+      <GitDescribeOutput>$([System.String]::Copy('$(GitDescribeOutputRaw)').Trim())</GitDescribeOutput>
+      <GitTag>$([System.String]::Copy('$(GitTagRaw)').Trim())</GitTag>
+      <GitTag Condition="'$(GitTag)' != '' and $([System.String]::Copy('$(GitTag)').StartsWith('fatal:'))"></GitTag>
+      <GitCommit>$([System.String]::Copy('$(GitCommitRaw)').Trim())</GitCommit>
+      <BuildTimestamp>$([System.DateTime]::UtcNow.ToString(&quot;yyyy-MM-ddTHH:mm:ssZ&quot;))</BuildTimestamp>
+      <AutoVersion Condition="'$(VersionEffective)' == '' and '$(GitTag)' != '' and '$(GitCommit)' != ''">$(GitTag)-$(GitCommit) @ $(BuildTimestamp)</AutoVersion>
+      <AutoVersion Condition="'$(VersionEffective)' == '' and '$(AutoVersion)' == '' and '$(GitTag)' != ''">$(GitTag) @ $(BuildTimestamp)</AutoVersion>
+      <AutoVersion Condition="'$(VersionEffective)' == '' and '$(AutoVersion)' == '' and '$(GitCommit)' != ''">$(GitCommit) @ $(BuildTimestamp)</AutoVersion>
+      <AutoVersion Condition="'$(VersionEffective)' == '' and '$(AutoVersion)' == '' and '$(GitDescribeOutput)' != ''">$(GitDescribeOutput) @ $(BuildTimestamp)</AutoVersion>
+      <AutoVersion Condition="'$(VersionEffective)' == '' and '$(AutoVersion)' == ''">$(BuildTimestamp)</AutoVersion>
+      <VersionEffective Condition="'$(VersionEffective)' == ''">$(AutoVersion)</VersionEffective>
+      <DefineConstantsSanitized Condition="'$(DefineConstantsOriginal)' != ''">$([System.Text.RegularExpressions.Regex]::Replace('$(DefineConstantsOriginal)', '(^|;)VERSION=(?:&quot;[^"]+&quot;|[^;]+)', '$1'))</DefineConstantsSanitized>
+      <DefineConstantsSanitized Condition="'$(DefineConstantsSanitized)' != ''">$([System.Text.RegularExpressions.Regex]::Replace('$(DefineConstantsSanitized)', ';;+', ';'))</DefineConstantsSanitized>
+      <DefineConstantsSanitized Condition="'$(DefineConstantsSanitized)' != ''">$([System.Text.RegularExpressions.Regex]::Replace('$(DefineConstantsSanitized)', '^;|;$', ''))</DefineConstantsSanitized>
+      <DefineConstants Condition="'$(DefineConstantsSanitized)' != ''">$(DefineConstantsSanitized)</DefineConstants>
+      <DefineConstants Condition="'$(DefineConstantsSanitized)' == '' and '$(DefineConstantsOriginal)' != ''"></DefineConstants>
+    </PropertyGroup>
+  </Target>
 
   <Target Name="GenerateVersionSource" BeforeTargets="BeforeBuild">
     <PropertyGroup>
