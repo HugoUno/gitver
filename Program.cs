@@ -12,6 +12,6 @@ internal static partial class Program
         // 透過編譯產生的部分方法套用最新版本
         ApplyVersionOverride(ref Version);
 
-        Console.WriteLine($"App version: v{Version}");
+        Console.WriteLine($"Application Version: {Version}");
     }
 }

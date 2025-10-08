@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(asdf install:*)",
+      "Bash(dotnet clean:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet build)",
+      "Bash(dotnet run:*)",
+      "Bash(git describe:*)",
+      "Bash(git tag:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
