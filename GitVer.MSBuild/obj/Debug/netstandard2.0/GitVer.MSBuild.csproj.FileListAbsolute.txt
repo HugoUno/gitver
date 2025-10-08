@@ -1,0 +1,5 @@
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/obj/Debug/netstandard2.0/GitVer.MSBuild.csproj.AssemblyReference.cache
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/obj/Debug/netstandard2.0/GitVer.MSBuild.GeneratedMSBuildEditorConfig.editorconfig
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/obj/Debug/netstandard2.0/GitVer.MSBuild.AssemblyInfoInputs.cache
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/obj/Debug/netstandard2.0/GitVer.MSBuild.AssemblyInfo.cs
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/obj/Debug/netstandard2.0/GitVer.MSBuild.csproj.CoreCompileInputs.cache

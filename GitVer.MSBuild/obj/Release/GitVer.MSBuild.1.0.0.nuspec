@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>GitVer.MSBuild</id>
+    <version>1.0.0</version>
+    <title>GitVer - 輕量級 Git 版本自動化工具</title>
+    <authors>Hugo</authors>
+    <developmentDependency>true</developmentDependency>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <readme>README.md</readme>
+    <projectUrl>https://github.com/youruser/gitver</projectUrl>
+    <description>基於 Git 的 .NET 版本自動化 MSBuild 套件。
+      
+      特色：
+      • 零配置，安裝即用
+      • 自動生成 tag-commit @ timestamp 格式版本
+      • 支援台灣時區 (+08:00)
+      • 純 MSBuild 實作，無外部相依性
+      • 生成強型別 GitVersionInfo 類別
+      
+      使用方式：
+      1. 安裝套件：Install-Package GitVer.MSBuild
+      2. 建置專案：dotnet build
+      3. 使用版本：GitVersionInfo.Version</description>
+    <releaseNotes>v1.0.0:
+• 初始版本
+• 支援 Git tag + commit hash + 建置時間
+• 台灣時區支援 (+08:00)
+• 強型別 GitVersionInfo 類別生成
+• 多重後備策略</releaseNotes>
+    <copyright>Copyright (c) 2025 Hugo</copyright>
+    <tags>git version msbuild automatic versioning taiwan lightweight</tags>
+    <repository type="git" url="https://github.com/youruser/gitver" commit="db3ebe00ba94102e67a79c30560f63727ddde907" />
+  </metadata>
+  <files>
+    <file src="/Users/Hugo/project/poc/gitver/README.md" target="/README.md" />
+    <file src="/Users/Hugo/project/poc/gitver/GitVer.MSBuild/build/GitVer.MSBuild.targets" target="build/GitVer.MSBuild.targets" />
+    <file src="/Users/Hugo/project/poc/gitver/GitVer.MSBuild/buildTransitive/GitVer.MSBuild.targets" target="buildTransitive/GitVer.MSBuild.targets" />
+  </files>
+</package>

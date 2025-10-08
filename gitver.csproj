@@ -45,7 +45,7 @@
       <GitTag>$([System.String]::Copy('$(GitTagRaw)').Trim())</GitTag>
       <GitTag Condition="'$(GitTag)' != '' and $([System.String]::Copy('$(GitTag)').StartsWith('fatal:'))"></GitTag>
       <GitCommit>$([System.String]::Copy('$(GitCommitRaw)').Trim())</GitCommit>
-      <BuildTimestamp>$([System.DateTime]::UtcNow.ToString(&quot;yyyy-MM-ddTHH:mm:ssZ&quot;))</BuildTimestamp>
+      <BuildTimestamp>$([System.DateTime]::UtcNow.AddHours(8).ToString(&quot;yyyy-MM-ddTHH:mm:ss+08:00&quot;))</BuildTimestamp>
       <AutoVersion Condition="'$(VersionEffective)' == '' and '$(GitTag)' != '' and '$(GitCommit)' != ''">$(GitTag)-$(GitCommit) @ $(BuildTimestamp)</AutoVersion>
       <AutoVersion Condition="'$(VersionEffective)' == '' and '$(AutoVersion)' == '' and '$(GitTag)' != ''">$(GitTag) @ $(BuildTimestamp)</AutoVersion>
       <AutoVersion Condition="'$(VersionEffective)' == '' and '$(AutoVersion)' == '' and '$(GitCommit)' != ''">$(GitCommit) @ $(BuildTimestamp)</AutoVersion>

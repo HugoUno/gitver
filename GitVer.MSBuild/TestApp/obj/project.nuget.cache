@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Fm7suos+Oco=",
+  "success": true,
+  "projectFilePath": "/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/TestApp.csproj",
+  "expectedPackageFiles": [
+    "/Users/Hugo/.nuget/packages/gitver.msbuild/1.0.0/gitver.msbuild.1.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

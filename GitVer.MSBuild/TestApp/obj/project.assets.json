@@ -1,0 +1,103 @@
+{
+  "version": 3,
+  "targets": {
+    "net9.0": {
+      "GitVer.MSBuild/1.0.0": {
+        "type": "package",
+        "build": {
+          "buildTransitive/GitVer.MSBuild.targets": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GitVer.MSBuild/1.0.0": {
+      "sha512": "j9lvu0DvgawUH0N2quIpS1YkpZ2SYEQSFxoNzJPe0Tj59bIVyCVjuyQgcpXHIjBFKexwUpbwK6cUawIOEYnEFw==",
+      "type": "package",
+      "path": "gitver.msbuild/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        "README.md",
+        "build/GitVer.MSBuild.targets",
+        "buildTransitive/GitVer.MSBuild.targets",
+        "gitver.msbuild.1.0.0.nupkg.sha512",
+        "gitver.msbuild.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net9.0": [
+      "GitVer.MSBuild >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/Users/Hugo/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/TestApp.csproj",
+      "projectName": "TestApp",
+      "projectPath": "/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/TestApp.csproj",
+      "packagesPath": "/Users/Hugo/.nuget/packages/",
+      "outputPath": "/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/Users/Hugo/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net9.0"
+      ],
+      "sources": {
+        "/Users/Hugo/project/poc/gitver/GitVer.MSBuild/bin/Release": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.300"
+    },
+    "frameworks": {
+      "net9.0": {
+        "targetAlias": "net9.0",
+        "dependencies": {
+          "GitVer.MSBuild": {
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[1.0.0, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/Users/Hugo/.asdf/installs/dotnet-core/9.0.305/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

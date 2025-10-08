@@ -1,0 +1,14 @@
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/bin/Release/net9.0/TestApp
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/bin/Release/net9.0/TestApp.deps.json
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/bin/Release/net9.0/TestApp.runtimeconfig.json
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/bin/Release/net9.0/TestApp.dll
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/bin/Release/net9.0/TestApp.pdb
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/obj/Release/net9.0/TestApp.GeneratedMSBuildEditorConfig.editorconfig
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/obj/Release/net9.0/TestApp.AssemblyInfoInputs.cache
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/obj/Release/net9.0/TestApp.AssemblyInfo.cs
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/obj/Release/net9.0/TestApp.csproj.CoreCompileInputs.cache
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/obj/Release/net9.0/TestApp.dll
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/obj/Release/net9.0/refint/TestApp.dll
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/obj/Release/net9.0/TestApp.pdb
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/obj/Release/net9.0/TestApp.genruntimeconfig.cache
+/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/obj/Release/net9.0/ref/TestApp.dll

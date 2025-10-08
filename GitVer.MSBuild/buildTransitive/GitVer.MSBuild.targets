@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <!-- 傳遞依賴支援：確保間接依賴的專案也能使用 GitVer -->
+  <Import Project="../build/GitVer.MSBuild.targets" />
+</Project>

@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- 基本屬性 -->
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    
+    <!-- 套件資訊 -->
+    <PackageId>GitVer.MSBuild</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Title>GitVer - 輕量級 Git 版本自動化工具</Title>
+    <Authors>Hugo</Authors>
+    <Description>
+      基於 Git 的 .NET 版本自動化 MSBuild 套件。
+      
+      特色：
+      • 零配置，安裝即用
+      • 自動生成 tag-commit @ timestamp 格式版本
+      • 支援台灣時區 (+08:00)
+      • 純 MSBuild 實作，無外部相依性
+      • 生成強型別 GitVersionInfo 類別
+      
+      使用方式：
+      1. 安裝套件：Install-Package GitVer.MSBuild
+      2. 建置專案：dotnet build
+      3. 使用版本：GitVersionInfo.Version
+    </Description>
+    <PackageTags>git;version;msbuild;automatic;versioning;taiwan;lightweight</PackageTags>
+    <PackageProjectUrl>https://github.com/hugo-dc/gitver</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/hugo-dc/gitver</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright>Copyright (c) 2025 Hugo</Copyright>
+    
+    <!-- 套件說明 -->
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>
+v1.0.0:
+• 初始版本
+• 支援 Git tag + commit hash + 建置時間
+• 台灣時區支援 (+08:00)
+• 強型別 GitVersionInfo 類別生成
+• 多重後備策略
+    </PackageReleaseNotes>
+    
+    <!-- 開發工具屬性 -->
+    <DevelopmentDependency>true</DevelopmentDependency>
+  </PropertyGroup>
+
+  <!-- 包含檔案 -->
+  <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="\" />
+    <None Include="build/**" Pack="true" PackagePath="build/" />
+    <None Include="buildTransitive/**" Pack="true" PackagePath="buildTransitive/" />
+  </ItemGroup>
+
+  <!-- 可選：套件圖示 -->
+  <!-- <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup> -->
+
+</Project>

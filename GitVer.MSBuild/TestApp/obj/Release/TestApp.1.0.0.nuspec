@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>TestApp</id>
+    <version>1.0.0</version>
+    <authors>TestApp</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="db3ebe00ba94102e67a79c30560f63727ddde907" />
+    <dependencies>
+      <group targetFramework="net9.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/bin/Release/net9.0/TestApp.runtimeconfig.json" target="lib/net9.0/TestApp.runtimeconfig.json" />
+    <file src="/Users/Hugo/project/poc/gitver/GitVer.MSBuild/TestApp/bin/Release/net9.0/TestApp.dll" target="lib/net9.0/TestApp.dll" />
+  </files>
+</package>

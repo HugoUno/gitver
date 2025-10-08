@@ -9,7 +9,12 @@
       "Bash(git describe:*)",
       "Bash(git tag:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(mkdir:*)",
+      "Bash(dotnet pack:*)",
+      "Bash(dotnet new:*)",
+      "Bash(dotnet nuget add source:*)",
+      "Bash(dotnet nuget locals:*)"
     ],
     "deny": [],
     "ask": []

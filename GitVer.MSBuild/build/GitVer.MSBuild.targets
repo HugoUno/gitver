@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <!-- GitVer.MSBuild - 輕量級 Git 版本自動化工具 -->
+  
+  <!-- 預設屬性 -->
+  <PropertyGroup>
+    <GitVerEnabled Condition="'$(GitVerEnabled)' == ''">true</GitVerEnabled>
+    <GitVerTimezone Condition="'$(GitVerTimezone)' == ''">8</GitVerTimezone>
+    <GitVerNamespace Condition="'$(GitVerNamespace)' == ''">$(RootNamespace)</GitVerNamespace>
+    <GitVerClassName Condition="'$(GitVerClassName)' == ''">GitVersionInfo</GitVerClassName>
+    <GitVerFallbackVersion Condition="'$(GitVerFallbackVersion)' == ''">dev</GitVerFallbackVersion>
+  </PropertyGroup>
+
+  <!-- Git 版本解析目標 -->
+  <Target Name="GitVerResolveVersion" BeforeTargets="GitVerGenerateVersionSource" Condition="'$(GitVerEnabled)' == 'true'">
+    <PropertyGroup>
+      <DefineConstantsOriginal>$(DefineConstants)</DefineConstantsOriginal>
+      <GitVerVersionEffective Condition="'$(GitVerVersionEffective)' == '' and '$(Version)' != '' and '$(Version)' != '1.0.0'">$(Version)</GitVerVersionEffective>
+      <GitVerVersionFromConstants Condition="'$(GitVerVersionFromConstants)' == '' and '$(DefineConstantsOriginal)' != ''">$([System.Text.RegularExpressions.Regex]::Match('$(DefineConstantsOriginal)', 'VERSION=(?:&quot;(?&lt;value&gt;[^"]+)&quot;|(?&lt;value&gt;[^;]+))').Groups['value'].Value)</GitVerVersionFromConstants>
+      <GitVerVersionEffective Condition="'$(GitVerVersionEffective)' == '' and '$(GitVerVersionFromConstants)' != ''">$(GitVerVersionFromConstants)</GitVerVersionEffective>
+    </PropertyGroup>
+
+    <!-- Git 命令執行 -->
+    <Exec
+      Command="git -C &quot;$(MSBuildProjectDirectory)&quot; describe --tags --always"
+      ConsoleToMSBuild="true"
+      IgnoreExitCode="true"
+      StandardOutputImportance="Low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitVerDescribeOutputRaw" />
+    </Exec>
+
+    <Exec
+      Command="git -C &quot;$(MSBuildProjectDirectory)&quot; describe --tags --abbrev=0"
+      ConsoleToMSBuild="true"
+      IgnoreExitCode="true"
+      StandardOutputImportance="Low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitVerTagRaw" />
+    </Exec>
+
+    <Exec
+      Command="git -C &quot;$(MSBuildProjectDirectory)&quot; rev-parse --short=8 HEAD"
+      ConsoleToMSBuild="true"
+      IgnoreExitCode="true"
+      StandardOutputImportance="Low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitVerCommitRaw" />
+    </Exec>
+
+    <!-- 版本字串組裝 -->
+    <PropertyGroup>
+      <GitVerDescribeOutput>$([System.String]::Copy('$(GitVerDescribeOutputRaw)').Trim())</GitVerDescribeOutput>
+      <GitVerTag>$([System.String]::Copy('$(GitVerTagRaw)').Trim())</GitVerTag>
+      <GitVerTag Condition="'$(GitVerTag)' != '' and $([System.String]::Copy('$(GitVerTag)').StartsWith('fatal:'))"></GitVerTag>
+      <GitVerCommit>$([System.String]::Copy('$(GitVerCommitRaw)').Trim())</GitVerCommit>
+      <GitVerBuildTimestamp>$([System.DateTime]::UtcNow.AddHours($(GitVerTimezone)).ToString(&quot;yyyy-MM-ddTHH:mm:ss+08:00&quot;))</GitVerBuildTimestamp>
+      <GitVerAutoVersion Condition="'$(GitVerVersionEffective)' == '' and '$(GitVerTag)' != '' and '$(GitVerCommit)' != ''">$(GitVerTag)-$(GitVerCommit) @ $(GitVerBuildTimestamp)</GitVerAutoVersion>
+      <GitVerAutoVersion Condition="'$(GitVerVersionEffective)' == '' and '$(GitVerAutoVersion)' == '' and '$(GitVerTag)' != ''">$(GitVerTag) @ $(GitVerBuildTimestamp)</GitVerAutoVersion>
+      <GitVerAutoVersion Condition="'$(GitVerVersionEffective)' == '' and '$(GitVerAutoVersion)' == '' and '$(GitVerCommit)' != ''">$(GitVerCommit) @ $(GitVerBuildTimestamp)</GitVerAutoVersion>
+      <GitVerAutoVersion Condition="'$(GitVerVersionEffective)' == '' and '$(GitVerAutoVersion)' == '' and '$(GitVerDescribeOutput)' != ''">$(GitVerDescribeOutput) @ $(GitVerBuildTimestamp)</GitVerAutoVersion>
+      <GitVerAutoVersion Condition="'$(GitVerVersionEffective)' == '' and '$(GitVerAutoVersion)' == ''">$(GitVerFallbackVersion) @ $(GitVerBuildTimestamp)</GitVerAutoVersion>
+      <GitVerVersionEffective Condition="'$(GitVerVersionEffective)' == ''">$(GitVerAutoVersion)</GitVerVersionEffective>
+    </PropertyGroup>
+
+    <!-- 輸出版本信息 -->
+    <Message Text="GitVer: Generated version '$(GitVerVersionEffective)'" Importance="normal" />
+  </Target>
+
+  <!-- 版本源碼生成目標 -->
+  <Target Name="GitVerGenerateVersionSource" BeforeTargets="BeforeBuild" Condition="'$(GitVerEnabled)' == 'true'">
+    <PropertyGroup>
+      <GitVerGeneratedPath>$(IntermediateOutputPath)GitVer.g.cs</GitVerGeneratedPath>
+      <GitVerVersionLiteral>$([MSBuild]::Escape('$(GitVerVersionEffective)'))</GitVerVersionLiteral>
+      <GitVerNamespaceActual Condition="'$(GitVerNamespace)' != ''">$(GitVerNamespace)</GitVerNamespaceActual>
+      <GitVerNamespaceActual Condition="'$(GitVerNamespaceActual)' == ''">GitVer</GitVerNamespaceActual>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <GitVerSourceLine Include="// &lt;auto-generated /&gt;" />
+      <GitVerSourceLine Include="namespace $(GitVerNamespaceActual)" />
+      <GitVerSourceLine Include="{" />
+      <GitVerSourceLine Include=" " />
+      <GitVerSourceLine Include="/// &lt;summary&gt;" />
+      <GitVerSourceLine Include="/// Git 版本信息，由 GitVer.MSBuild 自動生成" />
+      <GitVerSourceLine Include="/// &lt;/summary&gt;" />
+      <GitVerSourceLine Include="internal static class $(GitVerClassName)" />
+      <GitVerSourceLine Include="{" />
+      <GitVerSourceLine Include="    /// &lt;summary&gt;" />
+      <GitVerSourceLine Include="    /// 完整的 Git 版本字串" />
+      <GitVerSourceLine Include="    /// &lt;/summary&gt;" />
+      <GitVerSourceLine Include="    public static readonly string Version = &quot;$(GitVerVersionLiteral)&quot;%3b" />
+      <GitVerSourceLine Include=" " />
+      <GitVerSourceLine Include="    /// &lt;summary&gt;" />
+      <GitVerSourceLine Include="    /// Git 標籤" />
+      <GitVerSourceLine Include="    /// &lt;/summary&gt;" />
+      <GitVerSourceLine Include="    public static readonly string Tag = &quot;$([MSBuild]::Escape('$(GitVerTag)'))&quot;%3b" />
+      <GitVerSourceLine Include=" " />
+      <GitVerSourceLine Include="    /// &lt;summary&gt;" />
+      <GitVerSourceLine Include="    /// Git 提交哈希" />
+      <GitVerSourceLine Include="    /// &lt;/summary&gt;" />
+      <GitVerSourceLine Include="    public static readonly string Commit = &quot;$([MSBuild]::Escape('$(GitVerCommit)'))&quot;%3b" />
+      <GitVerSourceLine Include=" " />
+      <GitVerSourceLine Include="    /// &lt;summary&gt;" />
+      <GitVerSourceLine Include="    /// 建置時間戳" />
+      <GitVerSourceLine Include="    /// &lt;/summary&gt;" />
+      <GitVerSourceLine Include="    public static readonly string BuildTimestamp = &quot;$([MSBuild]::Escape('$(GitVerBuildTimestamp)'))&quot;%3b" />
+      <GitVerSourceLine Include="}" />
+      <GitVerSourceLine Include="}" />
+      <Compile Include="$(GitVerGeneratedPath)" />
+    </ItemGroup>
+
+    <WriteLinesToFile
+      File="$(GitVerGeneratedPath)"
+      Lines="@(GitVerSourceLine)"
+      Overwrite="true"
+      Encoding="UTF-8" />
+
+    <Message Text="GitVer: Generated $(GitVerGeneratedPath)" Importance="low" />
+  </Target>
+
+  <!-- 清理生成的檔案 -->
+  <Target Name="GitVerClean" BeforeTargets="Clean" Condition="'$(GitVerEnabled)' == 'true'">
+    <Delete Files="$(IntermediateOutputPath)GitVer.g.cs" ContinueOnError="true" />
+  </Target>
+
+</Project>
