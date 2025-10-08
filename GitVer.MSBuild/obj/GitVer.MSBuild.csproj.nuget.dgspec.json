@@ -5,7 +5,7 @@
   },
   "projects": {
     "/Users/Hugo/project/poc/gitver/GitVer.MSBuild/GitVer.MSBuild.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "restore": {
         "projectUniqueName": "/Users/Hugo/project/poc/gitver/GitVer.MSBuild/GitVer.MSBuild.csproj",
         "projectName": "GitVer.MSBuild",

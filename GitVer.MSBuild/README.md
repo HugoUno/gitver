@@ -159,5 +159,5 @@ MIT License
 
 歡迎提交 Issue 和 Pull Request！
 
-- 專案首頁: https://github.com/youruser/gitver
-- 問題回報: https://github.com/youruser/gitver/issues
+- 專案首頁: https://github.com/HugoUno/gitver
+- 問題回報: https://github.com/HugoUno/gitver/issues

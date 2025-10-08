@@ -9,7 +9,7 @@
     
     <!-- 套件資訊 -->
     <PackageId>GitVer.MSBuild</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Title>GitVer - 輕量級 Git 版本自動化工具</Title>
     <Authors>Hugo</Authors>
     <Description>
@@ -38,6 +38,10 @@
     <!-- 套件說明 -->
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
+v1.0.1:
+• 修正 README.md 中的 GitHub 連結
+• 更新文件連結到正確的 repository
+
 v1.0.0:
 • 初始版本
 • 支援 Git tag + commit hash + 建置時間
